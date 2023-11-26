@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <section>
+    <div class="container">
+      <h1 class="title">Binary to text converter</h1>
+      <button type="button" class="Switch" data-type="binary">Switch</button>
+      <form>
+
+        <div class="input">
+          <textarea name="input" id="input" cols="30" rows="10" placeholder="Input binary code ..."
+            data-type="binary"></textarea>
+
+        </div>
+        <button type="submit">Convert</button>
+        <div id="output">
+          Text here
+        </div>
+      </form>
+    </div>
+  </section>
+
+
+  <script>
+    const formE1 = document.querySelector("form");
+    const outputE1 = document.querySelector("#output");
+    const inputE1 = document.querySelector("#input");
+    const switchE1 = document.querySelector(".Switch");
+    const titleE1 = document.querySelector(".title");
+    // const formE1 = document.querySelector("form");
+
+    formE1.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const inputValue = e.target.input.value;
+      const result = inputValue.split("")
+      const inputType = e.target.input.getAttribute('data-type')
+      convert(inputValue, inputType)
+      console.log(result)
+    })
+
+    switchE1.addEventListener("click", (e) => {
+      const type = e.target.getAttribute("data-type")
+      inputE1.value = '';
+      outputE1.innerHTML = '';
+      if (type == 'binary') {
+        e.target.setAttribute("data-type", 'text');
+        inputE1.setAttribute('data-type', 'text');
+        inputE1.setAttribute("placeholder", "Input plain text...");
+        outputE1.innerText = "Output binary";
+        titleE1.innerText = "Text to Binary Converter"
+      } else if (type == "text") {
+        e.target.setAttribute("data-type", 'binary');
+        inputE1.setAttribute('data-type', 'binary');
+        inputE1.setAttribute("placeholder", "Input binary code ...");
+        outputE1.innerText = "Output text";
+        titleE1.innerText = "Binary to text converter"
+      } outputE1
+      console.log(type)
+    })
+
+
+    function convert(val, type) {
+      let output = '';
+      if (type = "binary") {
+        output = binaryToTextConverter(val)
+      }
+      else if (type == "text") {
+        output = textToBinaryConverter(val)
+      }
+      outputE1.innerText = output;
+
+    }
+    function binaryToTextConverter(val) {
+      let output = '';
+      output = val.split(" ")
+        .map((number) => parseInt(number, 2))
+        .map((number) => String.fromCharCode(number))
+        .join("");
+      return output;
+      console.log(output)
+    }
+
+    function textToBinaryConverter(val) {
+      let output = '';
+      output = val.split(" ")
+        .map((latter) => latter.charCodeAt(latter))
+        .map((latter) => latter.toString(2))
+        .join("");
+      return output;
+    }
+    console.log(formE1, outputE1, inputE1, switchE1, titleE1)
+  </script>
+</body>
+
+</html>
